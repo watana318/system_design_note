@@ -50,7 +50,7 @@ GET api/v1/shortUrl
 ```
 - URL Redirecting
  - tinyurl要求を受け取った後，301を返却する
-   - [fig](/home/melonoidz/system_design_note/fig/8-1.png)
+   - [fig](https://github.com/melonoidz/system_design_note/blob/main/fig/8-1.png)
  - Client/Server間の通信の詳細は下図
    - [fig2](/home/melonoidz/system_design_note/fig/8-1.png)
 - URL shortening flows
