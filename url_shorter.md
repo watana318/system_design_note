@@ -37,14 +37,22 @@
   - 目的と実装形式
     - client/server間を繋ぐために準備する
     - REST形式
-      - 1:URL shortening
+  - 1:URL shortening
 ```
 POST api/v1/data/shorten
- request parameter:{longUrl: longURLString}
- return short URL
+- request parameter:{longUrl: longURLString}
+- return short URL
 ```
-      - 2:URL redirecting
+  - 2:URL redirecting
+```
+GET api/v1/shortUrl
+- return longURL for HTTP redirection
+```
 - URL Redirecting
+ - tinyurl要求を受け取った後，301を返却する
+   - [fig](/home/melonoidz/system_design_note/fig/8-1.png)
+ - Client/Server間の通信の詳細は下図
+   - [fig2](/home/melonoidz/system_design_note/fig/8-1.png)
 - URL shortening flows
 ### Step3:詳細設計
 ### Step4:まとめ
