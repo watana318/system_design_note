@@ -52,7 +52,35 @@ GET api/v1/shortUrl
  - tinyurl要求を受け取った後，301を返却する
    - [fig](https://github.com/melonoidz/system_design_note/blob/main/fig/8-1.png)
  - Client/Server間の通信の詳細は下図
-   - [fig2](/home/melonoidz/system_design_note/fig/8-1.png)
+   - [fig](https://github.com/melonoidz/system_design_note/blob/main/fig/8-2.png)
+ - ★補足
+   - 301 redirect
+     - 永続的
+   - 302 redirect
+     - 一時的
 - URL shortening flows
+  - "www.tinyurl.com/{hashValue}" となると仮定する
+    - hash関数fを定義する必要がある
+      - [fig](https://github.com/melonoidz/system_design_note/blob/main/fig/8-3.png)
+    - 関数fが満たす要件
+      - 各longURLは一意のhashValueになる(=衝突しない)
+      - 各hashValueは一意のlongURLに復元できる
+
 ### Step3:詳細設計
+- Data model
+- Hash function
+  - アルゴリズム
+    - Hash value length
+    - Hash + collision resolution
+    - Base62 conversion
+  - 機能の比較
+    - TODO
+#### URL shorteningの詳細設計
+#### URL redirectingの詳細設計
 ### Step4:まとめ
+#### Extra
+- Rate Limiter
+- WEB Server Scaling
+- DB Scaling
+- 分析可能性について
+- 可用性，継続性，伸縮性
