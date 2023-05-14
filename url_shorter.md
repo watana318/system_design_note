@@ -68,19 +68,70 @@ GET api/v1/shortUrl
 
 ### Step3:詳細設計
 - Data model
+  - hash Tableに全て保存する方法
+    - とっかかりとしてはOK
+    - RDBに<shortURL, longURL>で持たせるのが良い
+      - [fig](https://github.com/melonoidz/system_design_note/blob/main/fig/8-4.png)
 - Hash function
-  - アルゴリズム
-    - Hash value length
-    - Hash + collision resolution
-    - Base62 conversion
-  - 機能の比較
-    - TODO
+  - long -> shortに変換する機能. hashValueとしても知られている
+    - ★：HashValueの長さの設定
+      - 文字数：0-9, a-z, A-Zの62文字
+      - 62^n >= 365billionとなるnを探す
+        - n=7
+  - ★：アルゴリズム
+    - 2つ
+      - Hash + collision resolution
+        - 有名アルゴリズム
+          - CRC32
+          - MD5
+          - SHA-1
+          - [fig] (https://github.com/melonoidz/system_design_note/blob/main/fig/t8-2.png)
+        - ★★：CRC32ですら少し長い．どうする？
+          - アプローチ1：最初の7文字だけ集める
+            - 懸念点：hashの衝突 
+              - DB内の探索で衝突を防ぎたい
+              - [fig] (https://github.com/melonoidz/system_design_note/blob/main/fig/8-5.png)
+                - 全リクエストに対して行うのはコスト高
+                - Bloom Filterという手法で回避できる 
+      - Base62 conversion
+        - 0-0,9-9,10-a,11-b,...61-Zとみなす
+        - 11157=2*62^2+55*62^1+59*62^0 = [2,55,59]->[2,T,X]
+        - [fig] (https://github.com/melonoidz/system_design_note/blob/main/fig/8-6.png)
+        - ".com/2TX" となる
+    - 性能比較
+      - [fig] (https://github.com/melonoidz/system_design_note/blob/main/fig/t8-3.png)
+      - Base62は次のURLを悟られやすいが，生成されるIDはUnique
 #### URL shorteningの詳細設計
+- Base62を採用したフロー
+  - [fig] (https://github.com/melonoidz/system_design_note/blob/main/fig/8-7.png)
+    - 4:uniqueID(=primary key)はUnique ID Generatorで生成する
+  - 例：
+    - longURL="/tuwejwejwer"
+    - Unique ID = 200921592
+    - (Base62) = "zn9edcu"
+    - [fig] (https://github.com/melonoidz/system_design_note/blob/main/fig/t8-4.png)
+      - UniqueID Generatorはchap7参照
 #### URL redirectingの詳細設計
+- 読み込み頻度>書き込み頻度の場合，キャッシュがあったほうが効率が良い
+  - [fig] (https://github.com/melonoidz/system_design_note/blob/main/fig/8-8.png)
+
 ### Step4:まとめ
+- この章で扱ったこと
+  - API design
+  - data model
+  - hash function
+  - URL shortening
+  - URL redirecting
 #### Extra
 - Rate Limiter
+  - 使用ユーザが膨大であった場合への対処
+  - Chap4
 - WEB Server Scaling
+  - WEB tierが静的なので，サーバのスケールが容易
 - DB Scaling
+  - レプリケーション/shardingの検討
 - 分析可能性について
+  - 誰が使っているか？　などの分析
 - 可用性，継続性，伸縮性
+  - 巨大システムでは検討必須の項目．
+  - Chap1
