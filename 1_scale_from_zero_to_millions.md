@@ -70,6 +70,7 @@
 # DBレプリケーションの検討
 - 上記の仕様ではDBが1つしかないため，FailOverに未対応
 　- DBをmaster/slaveに分割することで，これに対応
+  - WEBサーバはDB更新をMasterDBへ行う
 - DBレプリケーション
   - master：書き込みのみ許可
     - データ更新はこちら 
@@ -258,17 +259,3 @@
   - CDNにて静的アセットをHostする
   - ShardingによってData TierをScaleさせる
   - システムを監視し，自動化ツールを導入する
-
-
-
-
-
-
-
-
-
-
-
-
-
-- WEBサーバはDB更新をMasterDBへ行う
