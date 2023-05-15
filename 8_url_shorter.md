@@ -51,8 +51,10 @@ GET api/v1/shortUrl
 - URL Redirecting
  - tinyurl要求を受け取った後，301を返却する
 ![8-1](https://github.com/melonoidz/system_design_note/assets/27326835/86ab0271-9ea1-4d0b-aae4-4ee815776844)
+
  - Client/Server間の通信の詳細は下図
 ![8-2](https://github.com/melonoidz/system_design_note/assets/27326835/6412e858-7074-4ecc-b96d-3d26e0997f0a)
+
  - ★補足
    - 301 redirect
      - 永続的
@@ -61,7 +63,8 @@ GET api/v1/shortUrl
 - URL shortening flows
   - "www.tinyurl.com/{hashValue}" となると仮定する
     - hash関数fを定義する必要がある
-      - ![8-3](https://github.com/melonoidz/system_design_note/assets/27326835/fe6637cc-6b30-495b-b716-fea474a57eb7)
+![8-3](https://github.com/melonoidz/system_design_note/assets/27326835/fe6637cc-6b30-495b-b716-fea474a57eb7)
+    
     - 関数fが満たす要件
       - 各longURLは一意のhashValueになる(=衝突しない)
       - 各hashValueは一意のlongURLに復元できる
@@ -72,6 +75,7 @@ GET api/v1/shortUrl
     - とっかかりとしてはOK
     - RDBに<shortURL, longURL>で持たせるのが良い
 ![8-4](https://github.com/melonoidz/system_design_note/assets/27326835/ca3ce7b0-ffaa-433a-8274-be47839ba180)
+
 - Hash function
   - long -> shortに変換する機能. hashValueとしても知られている
     - ★：HashValueの長さの設定
