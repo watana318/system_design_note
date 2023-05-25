@@ -50,9 +50,13 @@ GET api/v1/shortUrl
 ```
 - URL Redirecting
  - tinyurl要求を受け取った後，301を返却する
+
+
 ![8-1](https://github.com/melonoidz/system_design_note/assets/27326835/86ab0271-9ea1-4d0b-aae4-4ee815776844)
 
  - Client/Server間の通信の詳細は下図
+
+
 ![8-2](https://github.com/melonoidz/system_design_note/assets/27326835/6412e858-7074-4ecc-b96d-3d26e0997f0a)
 
  - ★補足
@@ -63,6 +67,8 @@ GET api/v1/shortUrl
 - URL shortening flows
   - "www.tinyurl.com/{hashValue}" となると仮定する
     - hash関数fを定義する必要がある
+
+
 ![8-3](https://github.com/melonoidz/system_design_note/assets/27326835/fe6637cc-6b30-495b-b716-fea474a57eb7)
     
     - 関数fが満たす要件
@@ -74,6 +80,8 @@ GET api/v1/shortUrl
   - hash Tableに全て保存する方法
     - とっかかりとしてはOK
     - RDBに<shortURL, longURL>で持たせるのが良い
+
+
 ![8-4](https://github.com/melonoidz/system_design_note/assets/27326835/ca3ce7b0-ffaa-433a-8274-be47839ba180)
 
 - Hash function
@@ -89,6 +97,8 @@ GET api/v1/shortUrl
           - CRC32
           - MD5
           - SHA-1
+
+
 ![t8-2](https://github.com/melonoidz/system_design_note/assets/27326835/37ff9d14-c34d-4c51-a2d9-524fdeb5c91e)
         - ★★：CRC32ですら少し長い．どうする？
           - アプローチ1：最初の7文字だけ集める
@@ -100,23 +110,31 @@ GET api/v1/shortUrl
       - Base62 conversion
         - 0-0,9-9,10-a,11-b,...61-Zとみなす
         - 11157=2*62^2+55*62^1+59*62^0 = [2,55,59]->[2,T,X]
+        
 ![8-6](https://github.com/melonoidz/system_design_note/assets/27326835/d6e22e68-7359-45fc-af65-b2b95ebf732d)
         - ".com/2TX" となる
     - 性能比較
+    
 ![t8-3](https://github.com/melonoidz/system_design_note/assets/27326835/27487ea1-4189-4a1c-99ff-bdefd3425b5d)
       - Base62は次のURLを悟られやすいが，生成されるIDはUnique
 #### URL shorteningの詳細設計
 - Base62を採用したフロー
+
+
 ![8-7](https://github.com/melonoidz/system_design_note/assets/27326835/c4093bb8-0ccc-4a43-a7cd-5147700991af)
     - 4:uniqueID(=primary key)はUnique ID Generatorで生成する
   - 例：
     - longURL="/tuwejwejwer"
     - Unique ID = 200921592
     - (Base62) = "zn9edcu"
+
+
 ![t8-4](https://github.com/melonoidz/system_design_note/assets/27326835/3e552280-d45f-498f-8374-b496bc0a20a6)
       - UniqueID Generatorはchap7参照
 #### URL redirectingの詳細設計
 - 読み込み頻度>書き込み頻度の場合，キャッシュがあったほうが効率が良い
+
+
 ![8-8](https://github.com/melonoidz/system_design_note/assets/27326835/4bd78b90-e010-4a42-b468-0dcd873a9894)
 ### Step4:まとめ
 - この章で扱ったこと
