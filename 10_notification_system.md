@@ -86,6 +86,22 @@
 ##### データロスを防ぐには？
 ![image](https://github.com/melonoidz/system_design_note/assets/27326835/0615b669-010f-4eb9-8ee4-91a9c9fb7904)
 
+##### 受信者は通知をちょうど1回だけ受け取るか？
+
+#### 追加の検討項目
+##### 通知のテンプレート
+##### 通知設定
+##### Rate limiting
+##### Retry mechanism
+##### プッシュ通知のセキュリティ
+##### 通知の監視
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/dd481342-8e03-46ef-b924-29fadd26a99f)
+
+##### Event Tracking
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/612deaa3-a974-497d-bc62-d854dfe7e277)
+
+##### Updated design
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/7bfc00c4-13bd-435f-86a1-d8fa02080bd2)
 
 
 ### Step4:まとめ
