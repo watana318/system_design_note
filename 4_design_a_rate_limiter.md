@@ -81,6 +81,23 @@
     - 商用APIゲートウェイ使うのも結構あり
 
 #### アルゴリズムの検討
+- Rate Limiter実装にはいくつかの方法がある
+  - Token Bucket
+  - Leaking Bucket
+  - Fixed window counter
+  - Sliding window log
+  - Sliding window counter
+
+##### Token Bucket
+- Token Bucket：予め定義された容量を持つコンテナ
+  - 容量を超すと溢れる
+- Amazon, Stripeが使用している
+- Parameter
+  - Bucket size
+  - Refill rate
+
+
+<img width="218" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/578634d1-0ee7-4223-81fb-5e0041430320">
 
 
 ### Step3:詳細設計
