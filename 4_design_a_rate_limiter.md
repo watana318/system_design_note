@@ -42,8 +42,47 @@
 - 高Fault Tolerance
   - オフライン時の挙動?
 
-#### フェルミ推定
 ### Step2:基本設計
+#### Rate Limiterの実装箇所
+- Clientサイドに実装する場合
+  - クライアント側のリクエストは偽装しやすいため信頼性が低い
+  - 制御しにくい
+  - あまりよくない
+- Serverサイドに実装する場合
+  - 下図
+
+<img width="340" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/3c93dc15-e510-442b-8d9f-e0117369de69">
+
+- その他の方法
+  - ミドルウェアとして作成する
+
+<img width="339" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/2944e686-abf8-49db-af21-a6b89247933f">
+
+##### ミドルウェア配置設計におけるRate Limiterの挙動
+- APIが2rec/1secを許可している状態で，Clientが3rec/secをサーバに送信する場合
+  - 3つめのリクエストは弾かれる
+  - HTTP 429を返す　ユーザが送信した要求が多すぎることを示す
+
+<img width="323" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/98d0e932-2d27-4c92-8d1f-06788fa84628">
+
+#### クラウドサービスの利用検討
+- Rate Limiterは通常，APIゲートウェイ内に実装されている
+  - SSLターミネーション，認証，IPホワイトリストなどと合わせて実装されている
+- Rate Limitierを設計する際に自問すべき内容
+  - サーバ側 or ゲートウェイのどこに実装すべきか？
+    - 会社の状況による
+  - 判断の目安
+    - テクノロジースタック
+      - プログラミング言語
+      - キャッシュサービス
+    - ビジネスニーズ
+      - サーバ側で完結するなら自由，外部サービスを使うなら制限あるかも
+  - 独自実装は時間がかかる
+    - 商用APIゲートウェイ使うのも結構あり
+
+#### アルゴリズムの検討
+
+
 ### Step3:詳細設計
 ### Step4:まとめ
 #### Extra
