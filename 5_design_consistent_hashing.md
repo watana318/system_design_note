@@ -1,4 +1,4 @@
-# Consistent hashing
+# Consistent Hashing
 - 水平スケーリングの際に検討が必要な、分散リクエストに対応するためのシステム.
 - Wikipedia
 ```
@@ -8,7 +8,7 @@
 ```
 
  
-## Rehashing problem
+## The Rehashing problem
 N個のキャッシュサーバを持っていた時にロードバランスするための一般的な方法
 ```
 serverIndex=hash(key)%N
@@ -27,34 +27,43 @@ mod4⇒mod3に変化する
 
 ![image](https://github.com/melonoidz/system_design_note/assets/27326835/6ecbccb6-66e6-4e96-8d81-969a28e7f25d)
 
-Keyの配置が変わるので，fetch時に異常になる．
+Keyの配置が変わるので，fetch時に異常になる．再配置を試みると，ほぼ全て再配置される．
 
 ## Consistent hashing
-- Wikipedia：
+- Wikipedia：冒頭参照
 
 ### Hash space and Hash ring
-- Consistent hashingの動作を観察する
-f:=SHA-1
+- Consistent hashingの動作を観察する．f:=SHA-1とする．
+X0=0,...Xn=2^160-1とする．
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/6c187f7e-7032-48fc-9422-49587778fabd)
 
-<img width="357" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/f886107e-7c90-4197-af8e-7f14565e0c74">
-<br>
-<img width="163" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/3fb53ac7-a00f-45d4-900f-f20615afb376">
+これを円環にする.
 
-#### Hash servers
-- 先ほどと同様のHash関数fを考える。Hash ring上に4台のサーバを配置すると以下になる。
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/0fe39018-bee7-41ac-9ded-40e64e538bf8)
 
-<img width="366" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/3f933553-87d3-4c17-bd4c-65b9eb5043b1">
+### Hash servers
+- 先ほどと同様のHash関数fを考える．
+- Hash ring上に4台のサーバを配置すると以下になる：
 
-####  Hash keys
-- wip
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/54a22def-bac8-4174-a929-4c5fb1f0e5bd)
 
-<img width="309" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/b17dc867-a03c-426a-b986-1ae541473d4f">
+###  Hash keys
+- 上記のHash関数はMOD操作がないので，冒頭のRehashing problemとは異なる．
+- 4 cache keysを円環上にマッピングすると下図：
 
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/f323d4a3-b7db-467a-8bfa-d780c6460b7d)
 
-## Design Process Framework
-### Step1: 課題理解，スコープ定義
-#### フェルミ推定
-### Step2:基本設計
-### Step3:詳細設計
-### Step4:まとめ
-#### Extra
+### Server lookup
+
+### Add a server
+
+### Remove a server
+
+### Two issues in the basic approach
+
+### Virtual nodes
+
+### Find affected keys
+
+## Step4:まとめ
+### Extra
