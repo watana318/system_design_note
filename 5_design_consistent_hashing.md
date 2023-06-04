@@ -97,11 +97,48 @@ X0=0,...Xn=2^160-1とする．
 
 ![image](https://github.com/melonoidz/system_design_note/assets/27326835/03a54693-b9b1-4c54-9c00-f366b13e51f3)
 
-Virtual nodes または replica という技術で解決する
+Virtual nodes または replica という技術で解決する.
 
 ### Virtual nodes
+- サーバを分割し，そこに仮想ノードを整備する．
+- 3つに分割した例
+
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/a04b42ff-e086-4497-bc61-01a3638c638f)
+
+Key0は時計回りに探索したとき，s1_1に衝突する．これはサーバ1なので，Key0はサーバ1に格納される．
+
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/9c7ed6b5-3498-4622-bb36-39c34f5c76d1)
+
+- Virtual nodesを設定することで，Keyの分散具合が均等になる．
+- トレードオフが存在する
+  - Virtual nodeを増やすほうが標準偏差が小さくなり，安定
+  - Virtual nodeを増やすにつれSpaceが必要になり，コスト増
 
 ### Find affected keys
+- サーバ増減によって行われるキーの再配置はどこまで影響するか？
+- サーバ4を円環上に追加した例
+  - Server4から円環を反時計回り方向に見ると，Server3が最初に見つかる．この区間[S3, S4]が影響範囲である．
+
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/2c5115c0-9c9a-4709-970a-93e707caeb02)
+
+- サーバ1を除去した例
+  - 同様に考えると，影響区間は[S0, S1]である．
+
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/673c261a-83d7-4a8b-9f94-59f8bf6bb35a)
 
 ## Step4:まとめ
+### Consistent Hashingの利点
+- サーバ増減に伴うKeyの再配置を最小限にする
+- データの再配置が効率的なので，水平スケーリングに適している
+- Mitigate hotspot key problem．特定のサーバへの過度なアクセスはサーバのオーバーロードを引き起こす．
+  - 例：歌手Mapping，同一ノードにKaty PerryやLady Gagaがいる　など
+  - Consistent Hashingによりこれらに耐えられる
+
+### 使用されているサービス
+- Amazon Dynamo DB
+- Apache Cassandra
+- Discord chat APP
+- Akamai CDN
+- Maglev network load balancer 
+
 ### Extra
