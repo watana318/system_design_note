@@ -1,22 +1,26 @@
 # Consistent hashing
 水平スケーリングの際に検討が必要な、分散リクエストに対応するためのシステム
-## Rehasing problem
-N個のキャッシュサーバを持っていた時にロードバランスするための方法
+## Rehashing problem
+N個のキャッシュサーバを持っていた時にロードバランスするための一般的な方法
 ```
 serverIndex=hash(key)%N
 ```
-### 具体例
-- 4サーバ+8個のstring keyを持っていた場合
-- 
+- 例えば，8Key・4サーバの場合は下図
 
-<img width="248" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/6d8b5a18-b30e-4b1a-9e14-66a85a0d1654">
-<br>
-<img width="341" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/db2b3dab-82e4-4bde-b186-260031622c3b">
-<br>
-<img width="341" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/f4669781-e685-43a0-aa18-b9c30809409c">
-<br>
-<img width="305" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/4bbd3f77-d272-4eca-aaeb-11b1dd500317">
-<br>
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/b4282061-1bc1-42dd-9403-3ad5463f51a7)
+
+図示すると以下
+
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/529b3309-e2ad-44e1-8752-52673ca961e3)
+
+サーバが増減したときにいくつか問題が発生する.
+mod4⇒mod3に変化する
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/f9900b70-6bd8-4564-a15a-3234de00f236)
+
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/6ecbccb6-66e6-4e96-8d81-969a28e7f25d)
+
+Keyの配置が変わるので，fetch時に異常になる．
+
 ## Consistent hashing
 - Wikipedia：
 
