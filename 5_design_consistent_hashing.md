@@ -54,10 +54,25 @@ X0=0,...Xn=2^160-1とする．
 ![image](https://github.com/melonoidz/system_design_note/assets/27326835/f323d4a3-b7db-467a-8bfa-d780c6460b7d)
 
 ### Server lookup
+- Keyに対して時計回りにサーバ探索を行う．
+ - Key0はServer0に蓄積される．
+ - Key1はServer1に蓄積される．
+ - ete
+
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/844650eb-2e59-4a2d-93fa-14ef3d8084a5)
 
 ### Add a server
+- 新しいサーバが配置されたときの挙動は？
+- 例
+ - サーバ4が追加されたとき，Key0のみが再配置される．
+ - Key1,2,3は同じサーバに居続ける
+ - 時計回りに見て最近接なサーバはどれか？
+
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/37c4482a-bf2c-4b36-b4a9-333850b9f715)
+
 
 ### Remove a server
+- 
 
 ### Two issues in the basic approach
 
