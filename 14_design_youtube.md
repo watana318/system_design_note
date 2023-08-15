@@ -71,6 +71,36 @@ HuluやNetflixのような、動画共有サービス全般に適用できるア
 
 
 ### Step2:基本設計
+#### 全て自前にはしない理由
+- 設計はフルスクラッチではない．特にインタビューの場面では尚更そう．
+  - 時間制限がある中で，正しい技術スタックの概要を提示することは，詳細を詰めるよりも大切
+- CDNを1から作ることは高コスト
+  - NetflixはAWS, FacebookはAkamaiを使用している
+
+#### 大枠のコンテンツ
+3つのコンポーネント
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/0cce8d20-e786-4054-9a7d-f84849922af0)
+
+- Client：ユーザはYoutubeをPC，スマホ，スマートTVで視聴する．
+- CDN：動画はCDNに蓄積され，適宜配信される．
+- API Servers：動画のストーミング以外はAPIのやり取りで実施される．
+　- おすすめ紹介，動画のURL，サインアップなど
+
+#### 面接官の興味
+実はこの2つだけ
+- 動画のアップロード導線
+- 動画を視聴するまでの導線
+
+#### 動画のアップロード導線
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/5cb50eda-4378-42d4-b2a5-383992502366)
+
+- User：ユーザはYoutubeをPC，スマホ，スマートTVで視聴する．
+- Load balancer：
+
+#### 動画を視聴するまでの導線
+
+
+
 ### Step3:詳細設計
 ### Step4:まとめ
 #### Extra
