@@ -1,5 +1,6 @@
 # YouTube(Chapter14)
 HuluやNetflixのような、動画共有サービス全般に適用できるアーキテクチャ
+
 <img width="368" alt="image" src="https://github.com/melonoidz/system_design_note/assets/27326835/78b15053-cb92-4b10-9bd3-426d3ae0311c">
 
 構成はシンプル
