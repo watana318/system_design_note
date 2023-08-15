@@ -95,7 +95,28 @@ HuluやNetflixのような、動画共有サービス全般に適用できるア
 ![image](https://github.com/melonoidz/system_design_note/assets/27326835/5cb50eda-4378-42d4-b2a5-383992502366)
 
 - User：ユーザはYoutubeをPC，スマホ，スマートTVで視聴する．
-- Load balancer：
+- Load balancer：処理分散
+- API Servers：全ユーザはAPIリクエストベースで進む(ビデオ視聴は除く)
+- Metadata DB：ビデオメタデータが貯められる．高可用性やパフォーマンス向上のために用いられる
+- Metadata cache：ビデオメタデータやユーザのobjectがキャッシュされる
+- Original Storage：BLOB storage system．元動画を蓄積する．
+  - オブジェクトストレージで構成された、単一障害点の無い、スケーラブルなストレージです
+  - https://www.cloudou.net/storage/blob006/
+- Transcoded storage：トランスコードとは、あるデータ形式で圧縮・符号化された動画データなどを、同じ形式で画素数などの仕様が異なるデータに符号化しなおすこと。そのBLOBストレージ
+- CDN
+- Completion queue：ビデオトランスコードのイベントを貯めるMessage Queue
+- Completion handler：Completion queueからイベントデータを持ってきたり，metadata cache/DBを更新するワーカー
+
+#### 動画のアップロード導線A,B
+この上で，動画アップロードの導線は次の2つに分割される：
+A：生のビデオをアップロードする
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/b1d8d66b-3640-4804-b7d4-4b11dfa8daf3)
+
+
+B：ビデオのmetadataを更新する．これにはURL，size，format，ユーザ情報などが含まれる
+
+![image](https://github.com/melonoidz/system_design_note/assets/27326835/455baa3a-dda7-424e-b59d-0976ee7116a7)
+
 
 #### 動画を視聴するまでの導線
 
